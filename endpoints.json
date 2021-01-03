@@ -1,0 +1,349 @@
+{
+	"info": {
+		"_postman_id": "cb54bfe5-1860-4ea5-ae48-ac7c80b87055",
+		"name": "endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/users",
+			"item": [
+				{
+					"name": "/register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email_users",
+									"value": "felix@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "nama_users",
+									"value": "felix",
+									"type": "text"
+								},
+								{
+									"key": "password_users",
+									"value": "asd",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email_users",
+									"value": "jonsu@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "password_users",
+									"value": "asd",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VycyI6IjQiLCJlbWFpbF91c2VycyI6ImpvbnN1QG1haWwuY29tIiwidGlwZV91c2VycyI6MSwiaWF0IjoxNTg5NDU1MDQ4fQ.EmKvoqrFdV8yqShSMfrrZi_x-dGdnBfcSNR9VgWM8lo",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama_users",
+									"value": "jonsu2",
+									"type": "text"
+								},
+								{
+									"key": "gambar_users",
+									"type": "file",
+									"src": "/D:/Random_IMG/aseel.jpg"
+								},
+								{
+									"key": "old_password_users",
+									"value": "asd",
+									"type": "text"
+								},
+								{
+									"key": "confirm_password_users",
+									"value": "dsa",
+									"type": "text"
+								},
+								{
+									"key": "new_password_users",
+									"value": "dsa",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VycyI6IjQiLCJlbWFpbF91c2VycyI6ImpvbnN1QG1haWwuY29tIiwidGlwZV91c2VycyI6MSwiaWF0IjoxNTg5NDU1MDQ4fQ.EmKvoqrFdV8yqShSMfrrZi_x-dGdnBfcSNR9VgWM8lo",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/users/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topUp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VycyI6IjIiLCJlbWFpbF91c2VycyI6ImdpZGlvbkBtYWlsLmNvbSIsInRpcGVfdXNlcnMiOjAsImlhdCI6MTU4OTQzNzg1MX0.sYU6mWf9woi2DJYL68rFVyQEgqnWfO0-bqraKD8wOQs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email_users",
+									"value": "gidion@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "jumlah_topup",
+									"value": "200000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/topUp",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"topUp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/subscribe",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VycyI6IjQiLCJlbWFpbF91c2VycyI6ImpvbnN1QG1haWwuY29tIiwidGlwZV91c2VycyI6MSwiaWF0IjoxNTg5NDM0NTU0fQ.p1CcbInKKDMy70LeysFtaUCARflDMbDlcW-w2FDvwQs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email_users",
+									"value": "jonsu@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "jumlah_hit",
+									"value": "10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/subscribe",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"subscribe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/getPremium",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VycyI6IjIiLCJlbWFpbF91c2VycyI6ImdpZGlvbkBtYWlsLmNvbSIsInRpcGVfdXNlcnMiOjAsImlhdCI6MTU4OTQzNzg1MX0.sYU6mWf9woi2DJYL68rFVyQEgqnWfO0-bqraKD8wOQs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email_users",
+									"value": "gidion@mail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/getPremium",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"getPremium"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "/api/recipes",
+			"item": [
+				{
+					"name": "/search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VycyI6IjIiLCJlbWFpbF91c2VycyI6ImdpZGlvbkBtYWlsLmNvbSIsInRpcGVfdXNlcnMiOjAsImlhdCI6MTU4OTQzNzg1MX0.sYU6mWf9woi2DJYL68rFVyQEgqnWfO0-bqraKD8wOQs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:3000/api/recipes/search?key=56LpQTEr75&query=pizza&limit=3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"recipes",
+								"search"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "56LpQTEr75"
+								},
+								{
+									"key": "query",
+									"value": "pizza"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "/api/meals",
+			"item": [],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,61 @@
+-- npm start AWTO NODEMON
+-- npm test AWTO MOCHA
+
+API: https://spoonacular.com/food-api/docs
+
+USER { FREE USER, PREMIUM USER}
+
+FITUR { YANG BERHUBUNGAN DENGAN spoonacular PAKE api_hit }
+
+/api/users
+- /register => POST V -> jonsu
+- /login => POST (JWT AUTH) V -> jonsu
+- /topUp => POST  (TOKEN) V -> jonsu
+- /subscribe => POST (PAYMENT MODEL, TOKEN, 50) V -> jonsu
+- /getPremium => PUT (TOKEN, 200000) V -> jonsu
+- /profile => GET, PUT (TOKEN) V -> jonsu
+- /favorite => GET, POST, DELETE (TOKEN) V -> hubert
+- /follow => POST, GET, DELETE (TOKEN) V -> hubert
+- /shareRecipe => POST, GET (TOKEN) V -> hubert
+
+/api/recipes
+* search SUDAH TERMASUK INTRUKSI
+
+- /myRecipe => GET, POST, DELETE (TOKEN)
+
+- /search?{key=k3yku}&{query=cheese}&{limit=10} => GET (TOKEN) V -> jonsu
+* { required: 'key, name', optional: 'limit' }
+* https://api.spoonacular.com/recipes/search?query=cheese&number=2
+* https://api.spoonacular.com/recipes/{id}/information?includeNutrition=false
+
+- /searchByIngredients?{key=k3yku}&{ingredients=cheese,meat,egg}&{limit=10} => GET (TOKEN) V -> hubert
+* { required: 'key, ingredients', optional: 'limit' }
+* https://api.spoonacular.com/recipes/findByIngredients
+
+- /{id_recipe}/similar?{key=k3yku}&{limit=10} => GET (TOKEN, MASUK DB)
+* { required: 'id_recipe, key', optional: 'limit' }
+* https://api.spoonacular.com/recipes/715538/similar
+
+
+/api/meals
+- /generate?{key=k3yku}&{day=sunday}&{exclude=cheese,egg} => GET (TOKEN, MASUK DB)
+* { required: 'key', optional: 'day, exclude' }
+* day= { 'monday-sunday', 'week' }
+* https://api.spoonacular.com/mealplanner/generate
+
+
+PREMIUM USER 
+- /api/users/follow
+- /api/users/shareRecipe
+- /api/recipes/myRecipe
+- /api/recipes/searchByIngredients 
+- /api/recipes/{id_recipe}/similar 
+- /api/meals/generate
+
+
+
+
+
+
+
+
