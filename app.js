@@ -10,8 +10,4 @@ app.use('/api', require('./routes/hubert'));
 
 app.get('/', (req, res) => res.send('Online!'));
 
-<<<<<<< HEAD
 app.listen(process.env.PORT || 8080, () => console.log(`Server running`));
-=======
-app.listen(process.env.PORT || 3000, () => console.log(`Server running`));
->>>>>>> 5aae7e3ceeb5ca6f551baa5c4be86fc38a4c52c1
