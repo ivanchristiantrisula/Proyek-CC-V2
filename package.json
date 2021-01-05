@@ -1,14 +1,10 @@
 {
-	"name": "Proyek_SOA",
+	"name": "Proyek-CC-V2",
 	"version": "1.0.0",
 	"description": "",
 	"main": "app.js",
 	"scripts": {
-		"start": "nodemon app.js",
-		"test": "mocha",
-		"test-users": "mocha --bail ./test/users/test.js",
-		"test-recipes": "mocha --bail ./test/recipes/test.js",
-		"test-meals": "mocha --bail ./test/meals/test.js"
+		"start": "nodemon app.js"
 	},
 	"repository": {
 		"type": "git",

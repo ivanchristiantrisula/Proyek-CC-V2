@@ -1,9 +1,11 @@
 const textToSpeech = require('@google-cloud/text-to-speech');
 const fs = require('fs');
 const util = require('util');
+const path = require("path");
+
 const projectId = 'cloud-computing-yummies'
 const keyFilename = '../cloud-computing-yummies-ad13cfb68bd1.json'
-const path = require("path");
+
 const client = new textToSpeech.TextToSpeechClient({ projectId, keyFilename });
 // const YourSetting = {
 //     "audioConfig": {
@@ -24,9 +26,9 @@ const client = new textToSpeech.TextToSpeechClient({ projectId, keyFilename });
 async function Text2Speech(YourSetting) {
   const [response] = await client.synthesizeSpeech(YourSetting);
   const writeFile = util.promisify(fs.writeFile);
-  await writeFile(path.join(__dirname, '../public/'+YourSetting.outputFileName) , response.audioContent, 'binary');
+  await writeFile(path.join(__dirname, '../public/'+YourSetting.outputFileName), response.audioContent, 'binary');
   console.log(`Audio content written to file: ${(YourSetting).outputFileName}`);
-//console.log(YourSetting);
+ //console.log(YourSetting);
 }
 
 //Text2Speech(YourSetting);
