@@ -98,6 +98,7 @@ router.delete('/users/favorite/:fav_id',async (req,res)=>{
 router.get('/recipes/searchByIngredients', async (req,res)=>{
     const token= req.header('x-access-token');
     const verified= verifyToken(token);
+    let apiInfo = await thirdPartyAPI.APIInfo();
     if (!verified.id_users) {
         return res.status(verified.status).json(verified);
     }
@@ -131,7 +132,7 @@ router.get('/recipes/searchByIngredients', async (req,res)=>{
 
     let results= [];
     let fetchAPI= await fetch(`
-        ${thirdPartyAPI.host}/findByIngredients?apiKey=${thirdPartyAPI.api_key_hubert}&ingredients=${req.query.ingredient}&number=${limit}`
+        ${apiInfo.host}/findByIngredients?apiKey=${apiInfo.api_key_hubert}&ingredients=${req.query.ingredient}&number=${limit}`
     );
     let recipes= await fetchAPI.json();
     
@@ -144,7 +145,7 @@ router.get('/recipes/searchByIngredients', async (req,res)=>{
 
         if (!query.rows.length) {
             fetchAPI= await fetch(`
-                ${thirdPartyAPI.host}/${item.id}/information?apiKey=${thirdPartyAPI.api_key}&includeNutrition=false
+                ${apiInfo.host}/${item.id}/information?apiKey=${apiInfo.api_key}&includeNutrition=false
             `);
             let informations= await fetchAPI.json();
 

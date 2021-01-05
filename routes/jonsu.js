@@ -153,11 +153,12 @@ router.get('/recipes/search', async(req, res) => {
     // }
 
     let results= [];
+   
+     let apiInfo = await thirdPartyAPI.APIInfo();
     let fetchAPI= await fetch(`
-        ${thirdPartyAPI.host}/search?apiKey=${thirdPartyAPI.api_key}&query=${req.query.query}&number=${req.query.limit}`
+        ${apiInfo.host}/search?apiKey=${apiInfo.api_key}&query=${req.query.query}&number=${req.query.limit}`
     );
     let recipes= await fetchAPI.json();
-    
     await recipes.results.asyncForEach(async item => {
         query= await db.executeQuery(`
             SELECT *
@@ -167,7 +168,7 @@ router.get('/recipes/search', async(req, res) => {
 
         if (!query.rows.length) {
             fetchAPI= await fetch(`
-                ${thirdPartyAPI.host}/${item.id}/information?apiKey=${thirdPartyAPI.api_key}&includeNutrition=false
+                ${apiInfo.host}/${item.id}/information?apiKey=${apiInfo.api_key}&includeNutrition=false
             `);
             let informations= await fetchAPI.json();
             let instructions= [];

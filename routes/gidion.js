@@ -20,6 +20,8 @@ const config= {
 router.get("/recipes/similiar",async function(req,res){
     const token= req.header('x-access-token');
     const verified= verifyToken(token,true);
+
+    let apiInfo = await thirdPartyAPI.APIInfo();
     if (!verified.id_users) {
         return res.status(verified.status).json(verified);
     }
@@ -45,7 +47,7 @@ router.get("/recipes/similiar",async function(req,res){
             else if(limit!=undefined)
             {
                 let fetchAPI= await fetch(`
-                    ${thirdPartyAPI.host}/${id}/similar?apiKey=${config.api_key}&number=${limit}`
+                    ${apiInfo.host}/${id}/similar?apiKey=${apiInfo.host}&number=${limit}`
                 );
                 let recipes= await fetchAPI.json();
                 //onsole.log(recipes);
@@ -69,7 +71,7 @@ router.get("/recipes/similiar",async function(req,res){
             }
             else{
                 let fetchAPI= await fetch(`
-                    ${thirdPartyAPI.host}/${id}/similar?apiKey=${config.api_key}`
+                    ${apiInfo.host}/${id}/similar?apiKey=${apiInfo.host}`
                 );
                 let recipes= await fetchAPI.json();
                 for (let index = 0; index < recipes.length; index++) {
