@@ -6,6 +6,7 @@ const upload= require('../modules/upload');
 const asyncForEach= require('../modules/asyncForEach');
 const db= require('../database');
 const Text2Speech = require("../modules/Text2Speech")
+const path = require("path");
 
 const express= require('express');
 const jwt= require('jsonwebtoken');
@@ -503,12 +504,13 @@ router.get('/recipes/search', async(req, res) => {
         },
         "outputFileName": ttsFileName
     }
-    Text2Speech(setting);
+    await Text2Speech(setting);
 
     return res.status(200).json({
         status: 200,
         message: 'Pencarian berhasil.',
-        recipes: results
+        recipes: results,
+        tts: 'https://8080-cs-237213409382-default.asia-southeast1.cloudshell.dev/api/download?file='+ttsFileName
     });
 });
 
@@ -570,6 +572,11 @@ router.put('/users/:email_users', async (req, res) => {
     })
 });
 
+router.get('/download', async (req, res) => {
+    let fileName = req.query.file;
+    res.sendFile(fileName, { root: path.join(__dirname, '../public/') });
+});
+
 router.delete('/users/:email_users', async (req, res) => {
     let query= await db.executeQuery(`
         DELETE FROM users 
@@ -591,13 +598,6 @@ router.get('/recipes', async (req, res) => {
     return res.status(200).json({
         status: 200,
         user: query.rows
-    });
-});
-router.get('/tts', async (req, res) => {
-    
-
-    return res.status(200).json({
-        status: 200
     });
 });
 
