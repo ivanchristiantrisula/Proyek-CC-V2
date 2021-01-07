@@ -6,11 +6,15 @@ const upload= require('../modules/upload');
 const asyncForEach= require('../modules/asyncForEach');
 const Text2Speech = require("../modules/Text2Speech");
 const db= require('../database');
+const {Translate} = require('@google-cloud/translate').v2;
+const config = require("../config");
 
 const express= require('express');
 const jwt= require('jsonwebtoken');
 const fetch= require('node-fetch');
 const path = require("path");
+
+const translate = new Translate(config);
 
 const router= express.Router();
 
@@ -118,32 +122,32 @@ router.post('/users/login', async (req, res) => {
 
 // /recipes/search
 router.get('/recipes/search', async(req, res) => {
-    //const token= req.header('x-access-token');
-    //const verified= verifyToken(token);
+    const token= req.header('x-access-token');
+    const verified= verifyToken(token);
 
-    // if (!verified.id_users) {
-    //     return res.status(verified.status).json(verified);
-    // }
+    if (!verified.id_users) {
+        return res.status(verified.status).json(verified);
+    }
 
-    // if (!req.query.key || !req.query.query) {
-    //     return res.status(401).json({
-    //         status: 401,
-    //         message: 'Parameter key dan query tidak boleh kosong.'
-    //     });
-    // }
+    if (!req.query.key || !req.query.query) {
+        return res.status(401).json({
+            status: 401,
+            message: 'Parameter key dan query tidak boleh kosong.'
+        });
+    }
 
-    // let query= await db.executeQuery(`
-    //     SELECT *
-    //     FROM users
-    //     WHERE api_key = '${req.query.key}'
-    // `);
+    let query= await db.executeQuery(`
+        SELECT *
+        FROM users
+        WHERE api_key = '${req.query.key}'
+    `);
 
-    // if (!query.rows.length) {
-    //     return res.status(401).json({
-    //         status: 401,
-    //         message: 'Anda tidak memiliki akses.'
-    //     });
-    // } 
+    if (!query.rows.length) {
+        return res.status(401).json({
+            status: 401,
+            message: 'Anda tidak memiliki akses.'
+        });
+    } 
     
     // if (query.rows[0].api_hit === 0) {
     //     return res.status(401).json({
@@ -154,7 +158,7 @@ router.get('/recipes/search', async(req, res) => {
 
     let results= [];
    
-     let apiInfo = await thirdPartyAPI.APIInfo();
+    let apiInfo = await thirdPartyAPI.APIInfo();
     let fetchAPI= await fetch(`
         ${apiInfo.host}/search?apiKey=${apiInfo.api_key}&query=${req.query.query}&number=${req.query.limit}`
     );
@@ -218,13 +222,27 @@ router.get('/recipes/search', async(req, res) => {
         SET api_hit = api_hit - 1
         WHERE api_key = '${req.query.key}'
     `);
-
+    console.log(results.bahan_recipes);
     let textTTS = "";
-    
+
     results.forEach(element => {
-        textTTS+= element.nama_recipes+" Ingridients : "+element.bahan_recipes+" How to cook : "+element.instruksi_recipes;
+        textTTS+= "Nama resep : "+element.nama_recipes.toString()+" Bahan - bahan : "+element.bahan_recipes.toString()+" Cara Memasak : "+element.instruksi_recipes.toString();
     });
 
+    textTTS = await translate.translate(textTTS, 'id');
+    
+    results.forEach(async element => {
+        element.bahan_recipes = await translate.translate(element.bahan_recipes, 'id');
+        element.instruksi_recipes = await translate.translate(element.instruksi_recipes, 'id');
+        element.nama_recipes = await translate.translate(element.nama_recipes, 'id');
+        element.deskripsi_recipes = await translate.translate(element.deskripsi_recipes,'id');
+        // console.log(element.instruksi_recipes[0].toString());
+        // textTTS+= "Nama resep : "+element.nama_recipes[0].toString()+" Bahan - bahan : "+element.bahan_recipes[0].toString()+" Cara Memasak : "+element.instruksi_recipes[0].toString();
+    });
+
+    
+
+    console.log("TEXT TTS TRANSLATED: "+textTTS);
     let ttsFileName = Math.floor(new Date().getTime() / 1000)+".mp3";
 
     await Text2Speech({
@@ -256,5 +274,6 @@ router.get('/download', async (req, res) => {
     let fileName = req.query.file;
     res.sendFile(fileName, { root: path.join(__dirname, '../public/') });
 });
+
 
 module.exports= router;
