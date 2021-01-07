@@ -4,11 +4,16 @@ const verifyToken= require('../modules/verifyToken');
 const upload= require('../modules/upload');
 const asyncForEach= require('../modules/asyncForEach');
 const db= require('../database');
+const {Translate} = require('@google-cloud/translate').v2;
+const config = require("../config");
+const Text2Speech = require("../modules/Text2Speech");
+
 
 const express= require('express');
 const jwt= require('jsonwebtoken');
 const fetch= require('node-fetch');
 
+const translate = new Translate(config);
 const router= express.Router();
 
 router.get('/users/favorite',async (req,res)=>{
@@ -103,32 +108,13 @@ router.get('/recipes/searchByIngredients', async (req,res)=>{
         return res.status(verified.status).json(verified);
     }
     //if(verified.tipe_users == 0) return res.status(401).json({status:401, message:"hanya user premium"})
-    if (!req.query.key || !req.query.ingredient) {
+    if (!req.query.ingredient) {
         return res.status(401).json({
             status: 401,
-            message: 'Parameter key dan ingredient tidak boleh kosong.'
+            message: 'Parameter ingredient tidak boleh kosong.'
         });
     }
     const limit = (!req.query.limit) ? "": req.query.limit
-    let query= await db.executeQuery(`
-        SELECT *
-        FROM users
-        WHERE api_key = '${req.query.key}' and id_users = ${verified.id_users}
-    `);
-
-    if (!query.rows.length) {
-        return res.status(401).json({
-            status: 401,
-            message: 'Anda tidak memiliki akses.'
-        });
-    } 
-    
-    if (query.rows[0].api_hit === 0) {
-        return res.status(401).json({
-            status: 401,
-            message: 'API hit habis.'
-        });
-    }
 
     let results= [];
     let fetchAPI= await fetch(`
@@ -186,6 +172,48 @@ router.get('/recipes/searchByIngredients', async (req,res)=>{
         }
     });
 
+    let textTTS = "";
+
+    results.forEach(element => {
+        textTTS+= "Nama resep : "+element.nama_recipes.toString()+" Bahan - bahan : "+element.bahan_recipes.toString()+" Cara Memasak : "+element.instruksi_recipes.toString();
+    });
+
+    textTTS = await translate.translate(textTTS, 'id');
+    
+    results.forEach(async element => {
+        element.bahan_recipes = await translate.translate(element.bahan_recipes, 'id');
+        element.instruksi_recipes = await translate.translate(element.instruksi_recipes, 'id');
+        element.nama_recipes = await translate.translate(element.nama_recipes, 'id');
+        element.deskripsi_recipes = await translate.translate(element.deskripsi_recipes,'id');
+        // console.log(element.instruksi_recipes[0].toString());
+        // textTTS+= "Nama resep : "+element.nama_recipes[0].toString()+" Bahan - bahan : "+element.bahan_recipes[0].toString()+" Cara Memasak : "+element.instruksi_recipes[0].toString();
+    });
+    
+    let ttsFileName = Math.floor(new Date().getTime() / 1000)+".mp3";
+
+    await Text2Speech({
+        "audioConfig": {
+        "audioEncoding": "LINEAR16",
+        "pitch": 0,
+        "speakingRate": 1.00
+        },
+        "input": {
+        "text": textTTS
+        },
+        "voice": {
+        "languageCode": "en-US",
+        "name": "en-US-Wavenet-F"
+        },
+        "outputFileName": ttsFileName
+    });
+
+    // return res.status(200).json({
+    //     status: 200,
+    //     message: 'Pencarian berhasil.',
+    //     recipes: results,
+    //     text_to_speech: 'https://8080-cs-237213409382-default.asia-southeast1.cloudshell.dev/api/download?file='+ttsFileName
+    // });
+
     query= await db.executeQuery(`
         UPDATE users
         SET api_hit = api_hit - 1
@@ -195,7 +223,8 @@ router.get('/recipes/searchByIngredients', async (req,res)=>{
     return res.status(200).json({
         status: 200,
         message: 'Pencarian berhasil.',
-        recipes: results
+        recipes: results,
+        text_to_speech: 'https://8080-cs-237213409382-default.asia-southeast1.cloudshell.dev/api/download?file='+ttsFileName
     });
 });
 

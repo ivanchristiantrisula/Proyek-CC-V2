@@ -1,0 +1,439 @@
+{
+	"info": {
+		"_postman_id": "830c8757-4889-4882-a7d1-f930d40587d8",
+		"name": "endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/users",
+			"item": [
+				{
+					"name": "/register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email_users",
+									"value": "felix@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "nama_users",
+									"value": "felix",
+									"type": "text"
+								},
+								{
+									"key": "password_users",
+									"value": "asd",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email_users",
+									"value": "jonsu@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "password_users",
+									"value": "asd",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "favorite",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://8080-cs-237213409382-default.asia-southeast1.cloudshell.dev",
+									"type": "string"
+								},
+								{
+									"key": "client_authentication",
+									"value": "body",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "scope",
+									"value": "https://www.googleapis.com/auth/cloud-platform",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "{{CLIENT_SECRET}}",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "{{CLIENT_ID}}",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "https://accounts.google.com/o/oauth2/token",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "https://accounts.google.com/o/oauth2/auth",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "Google token",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VycyI6IjQiLCJlbWFpbF91c2VycyI6ImpvbnN1QG1haWwuY29tIiwidGlwZV91c2VycyI6MSwiaWF0IjoxNjEwMDI1MzIwfQ.rg28P6I9QgMfEGBhWjLPCzq1WJM9At1i0255UEAbKD8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "recipe_id",
+									"value": "492560",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL_TESTING}}/api/users/favorite",
+							"host": [
+								"{{APP_URL_TESTING}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"favorite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "favorite",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://8080-cs-237213409382-default.asia-southeast1.cloudshell.dev",
+									"type": "string"
+								},
+								{
+									"key": "client_authentication",
+									"value": "body",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "scope",
+									"value": "https://www.googleapis.com/auth/cloud-platform",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "{{CLIENT_SECRET}}",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "{{CLIENT_ID}}",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "https://accounts.google.com/o/oauth2/token",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "https://accounts.google.com/o/oauth2/auth",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "Google token",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VycyI6IjQiLCJlbWFpbF91c2VycyI6ImpvbnN1QG1haWwuY29tIiwidGlwZV91c2VycyI6MSwiaWF0IjoxNjEwMDI1MzIwfQ.rg28P6I9QgMfEGBhWjLPCzq1WJM9At1i0255UEAbKD8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{APP_URL_TESTING}}/api/users/favorite",
+							"host": [
+								"{{APP_URL_TESTING}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"favorite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "favorite",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://8080-cs-237213409382-default.asia-southeast1.cloudshell.dev",
+									"type": "string"
+								},
+								{
+									"key": "client_authentication",
+									"value": "body",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "scope",
+									"value": "https://www.googleapis.com/auth/cloud-platform",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "{{CLIENT_SECRET}}",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "{{CLIENT_ID}}",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "https://accounts.google.com/o/oauth2/token",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "https://accounts.google.com/o/oauth2/auth",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "Google token",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VycyI6IjQiLCJlbWFpbF91c2VycyI6ImpvbnN1QG1haWwuY29tIiwidGlwZV91c2VycyI6MSwiaWF0IjoxNjEwMDI1MzIwfQ.rg28P6I9QgMfEGBhWjLPCzq1WJM9At1i0255UEAbKD8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL_TESTING}}/api/users/favorite/26",
+							"host": [
+								"{{APP_URL_TESTING}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"favorite",
+								"26"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/recipes",
+			"item": [
+				{
+					"name": "/search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VycyI6IjIiLCJlbWFpbF91c2VycyI6ImdpZGlvbkBtYWlsLmNvbSIsInRpcGVfdXNlcnMiOjAsImlhdCI6MTU4OTQzNzg1MX0.sYU6mWf9woi2DJYL68rFVyQEgqnWfO0-bqraKD8wOQs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:3000/api/recipes/search?key=56LpQTEr75&query=pizza&limit=3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"recipes",
+								"search"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "56LpQTEr75"
+								},
+								{
+									"key": "query",
+									"value": "pizza"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search by ingridients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "similiar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

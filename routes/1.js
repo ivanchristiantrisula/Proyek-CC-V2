@@ -20,24 +20,19 @@ const config= {
 router.get("/recipes/similiar",async function(req,res){
     const token= req.header('x-access-token');
     const verified= verifyToken(token,true);
+    let limit = req.query.limit;
 
     let apiInfo = await thirdPartyAPI.APIInfo();
     if (!verified.id_users) {
         return res.status(verified.status).json(verified);
     }
-    var api_key = req.query.api_key;
-    if(api_key==undefined)
-    {
-        return res.status(400).send("Api Key tidak ada");
-    }
     else
     {
-        let queryapi = `select * from users where id_users = ${verified.id_users} and api_key='${api_key}'`;
+        let queryapi = `select * from users where id_users = ${verified.id_users}`;
         let hasilapi = await db.executeQuery(queryapi);
         if(hasilapi.rows.length>0)
         {
             var id = req.query.id;
-            var limit = req.query.limit;
             let results= [];
             if(id==undefined)
             {
@@ -47,51 +42,32 @@ router.get("/recipes/similiar",async function(req,res){
             else if(limit!=undefined)
             {
                 let fetchAPI= await fetch(`
-                    ${apiInfo.host}/${id}/similar?apiKey=${apiInfo.host}&number=${limit}`
+                    ${apiInfo.host}/${id}/similar?apiKey=${apiInfo.api_key}&number=${limit}`
                 );
                 let recipes= await fetchAPI.json();
-                //onsole.log(recipes);
+                console.log(recipes);
                 for (let index = 0; index < recipes.length; index++) {
                     results.push({
                         id_recipes : recipes[index].id,
                         nama_recipes : recipes[index].title
                     })            
-                }
-                if(results.length)
-                {
-                    let query3 = `update users set api_hit = api_hit-1 where id_users =${verified.id_users} and api_hit>0`;
-                    let hasil3 = await db.executeQuery(query3);
-                    if(hasil3.rowCount!=0){
-                        return res.status(200).send(results);
-                    }
-                    else{
-                        return res.status(400).send("Api hit habis");
-                    }
                 }
             }
             else{
                 let fetchAPI= await fetch(`
-                    ${apiInfo.host}/${id}/similar?apiKey=${apiInfo.host}`
+                    ${apiInfo.host}/${id}/similar?apiKey=${apiInfo.api_key}`
                 );
-                let recipes= await fetchAPI.json();
+                let recipes= await fetchAPI.json()
+                console.log(recipes);
                 for (let index = 0; index < recipes.length; index++) {
                     results.push({
                         id_recipes : recipes[index].id,
                         nama_recipes : recipes[index].title
                     })            
                 }
-                if(results.length)
-                {
-                    let query3 = `update users set api_hit = api_hit-1 where id_users =${verified.id_users} and api_hit>0`;
-                    let hasil3 = await db.executeQuery(query3);
-                    if(hasil3.rowCount!=0){
-                        return res.status(200).send(results);
-                    }
-                    else{
-                        return res.status(400).send("Api hit habis");
-                    }
-                }
             }
+
+            return res.status(200).send(results);
         }
         else
         {

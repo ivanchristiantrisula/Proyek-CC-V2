@@ -129,32 +129,12 @@ router.get('/recipes/search', async(req, res) => {
         return res.status(verified.status).json(verified);
     }
 
-    if (!req.query.key || !req.query.query) {
+    if (!req.query.query) {
         return res.status(401).json({
             status: 401,
-            message: 'Parameter key dan query tidak boleh kosong.'
+            message: 'Parameter query tidak boleh kosong.'
         });
     }
-
-    let query= await db.executeQuery(`
-        SELECT *
-        FROM users
-        WHERE api_key = '${req.query.key}'
-    `);
-
-    if (!query.rows.length) {
-        return res.status(401).json({
-            status: 401,
-            message: 'Anda tidak memiliki akses.'
-        });
-    } 
-    
-    // if (query.rows[0].api_hit === 0) {
-    //     return res.status(401).json({
-    //         status: 401,
-    //         message: 'API hit habis.'
-    //     });
-    // }
 
     let results= [];
    
